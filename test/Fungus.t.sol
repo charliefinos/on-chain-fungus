@@ -7,6 +7,7 @@ import "../src/Fungus.sol";
 contract CounterTest is Test {
     Fungus public fungus;
     address bob = address(0x1);
+    address alice = address(0x2);
 
     function setUp() public {
         fungus = new Fungus();
@@ -22,5 +23,9 @@ contract CounterTest is Test {
         fungus.tokenURI(1);
         console.logString(string(fungus.tokenURI(1)));
         vm.stopPrank();
+
+        vm.startPrank(alice);
+        fungus.mint(alice, 1);
+        assertEq(fungus.balanceOf(alice), 1);
     }
 }
